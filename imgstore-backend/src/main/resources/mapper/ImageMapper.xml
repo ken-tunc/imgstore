@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kentunc.imgstore.repository.ImageMapper">
+    <resultMap id="imageMetaDataResult" type="org.kentunc.imgstore.model.ImageMetaData">
+        <id property="imageId" column="image_id" />
+        <result property="caption" column="caption" />
+    </resultMap>
+    <resultMap id="imageRawDataResult" type="org.kentunc.imgstore.model.ImageRawData">
+        <id property="imageId" column="image_id" />
+        <result property="binary" column="binary" />
+    </resultMap>
+
+    <select id="findAll" resultMap="imageMetaDataResult">
+        select `image_id`, `caption`
+        from `image`
+    </select>
+
+    <select id="findRawData" resultMap="imageRawDataResult">
+        select `image_id`, `binary`
+        from `image`
+        where `image_id` = #{imageId}
+    </select>
+
+    <insert id="save">
+        insert into `image` (`caption`, `binary`)
+        values (#{caption}, #{binary})
+    </insert>
+</mapper>
